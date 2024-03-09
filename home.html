@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quran Verse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Cairo', Arial, sans-serif;
+            background-color: #191C1F;
+            color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            color: #70DF20;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 1rem 2rem;
+            background-color: #70DF20;
+            color: #FFFFFF;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #75E129;
+        }
+
+        .verse-container {
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        .verse {
+            font-size: 2rem;
+            margin-top: 2rem;
+            font-family: 'Amiri Quran', Amiri, 'TemplateStyles-Calibri-Quran', 'Noto Naskh Arabic', 'Traditional Arabic', 'Sakkal Majalla', Arial, sans-serif;
+        }
+
+        .source {
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="verse-container">
+        <h1>آية عشوائية من القرآن</h1>
+        <div class="verse" id="quran-verse">
+            جار التحميل...
+        </div>
+        <div class="source" id="quran-source">
+            السورة: جار التحميل...
+        </div>
+        <a href="#" id="view-verse">عرض</a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const verseElement = document.getElementById("quran-verse");
+            const sourceElement = document.getElementById("quran-source");
+            const viewButton = document.getElementById("view-verse");
+
+            viewButton.addEventListener("click", function(event) {
+                event.preventDefault();
+                fetchVerse();
+            });
+
+            function fetchVerse() {
+                fetch("https://quran-vibes-api.vercel.app/verses.json")
+                    .then(response => response.json())
+                    .then(data => {
+                        const randomIndex = Math.floor(Math.random() * data.length);
+                        const randomVerse = data[randomIndex].text;
+                        const verseParts = randomVerse.match(/\((.*?)\)/g); // Extracting text within parentheses
+                        if (verseParts.length >= 2) {
+                            verseElement.innerText = verseParts[0].replace(/\(|\)/g, ''); // Displaying main verse
+                            sourceElement.innerText = "السورة: " + verseParts[1].replace(/\(|\)/g, ''); // Displaying source
+                        } else {
+                            verseElement.innerText = "حدث خطأ في جلب الآية. الرجاء المحاولة مرة أخرى.";
+                            sourceElement.innerText = "";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error fetching verse:", error);
+                        verseElement.innerText = "حدث خطأ أثناء جلب الآية. الرجاء المحاولة مرة أخرى.";
+                        sourceElement.innerText = "";
+                    });
+            }
+
+            fetchVerse(); // Fetch verse when the page loads
+        });
+    </script>
+</body>
+</html>
