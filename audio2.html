@@ -31,7 +31,7 @@
         }
 
         .audio-controls {
-            width: 70%;
+            width: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -39,19 +39,18 @@
         }
 
         .audio-controls button {
-            background-color: #70DF20;
-            color: #FFFFFF;
-            padding: 10px 20px;
+            background-color: transparent;
+            color: #70DF20;
+            padding: 10px;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: color 0.3s ease;
             margin: 0 10px;
             font-size: 1.5rem;
         }
 
         .audio-controls button:hover {
-            background-color: #75E129;
+            color: #75E129;
         }
 
         .progress-bar {
@@ -74,9 +73,13 @@
         }
 
         .audio-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            width: 70%;
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 2px solid #70DF20;
+            border-radius: 10px;
+            margin-top: 20px;
         }
 
         .audio-item {
@@ -86,6 +89,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
             position: relative;
+            margin-bottom: 10px;
         }
 
         .audio-item:hover {
@@ -121,15 +125,15 @@
 </head>
 <body>
     <div class="container">
-        <h1>قائمة السور</h1>
+        <h1>أرح أذنيك</h1>
         <div class="audio-controls">
             <button id="play-button"><i class="fas fa-play"></i></button>
             <button id="stop-button"><i class="fas fa-stop"></i></button>
             <input type="range" id="volume-slider" class="volume-slider" min="0" max="1" step="0.1" value="1">
-            <div class="progress-bar">
-                <div class="progress-bar-fill"></div>
-            </div>
-            <div id="time-display">00:00 / 00:00</div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-bar-fill"></div>
         </div>
 
         <div class="audio-list" id="audio-items">
@@ -146,7 +150,6 @@
             const playButton = document.getElementById("play-button");
             const stopButton = document.getElementById("stop-button");
             const volumeSlider = document.getElementById("volume-slider");
-            const timeDisplay = document.getElementById("time-display");
             const progressBarFill = document.querySelector(".progress-bar-fill");
 
             fetch("https://quran-vibes-api.vercel.app/audio/a_jbr.json")
