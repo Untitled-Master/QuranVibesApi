@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quran Swar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Cairo', Arial, sans-serif;
+            background-color: #191C1F;
+            color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            color: #70DF20;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 1rem 2rem;
+            background-color: #70DF20;
+            color: #FFFFFF;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #75E129;
+        }
+
+        .audio-list {
+            max-width: 600px;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .audio-item {
+            margin-bottom: 10px;
+        }
+
+        .audio-item button {
+            background-color: #70DF20;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .audio-item button:hover {
+            background-color: #75E129;
+        }
+    </style>
+</head>
+<body>
+    <div class="audio-list">
+        <h1>قائمة السور</h1>
+        <div id="audio-items">
+            جار التحميل...
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const audioItemsContainer = document.getElementById("audio-items");
+
+            fetch("https://quran-vibes-api.vercel.app/audio/a_jbr.json")
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(item => {
+                        const audioItem = document.createElement("div");
+                        audioItem.classList.add("audio-item");
+
+                        const audioButton = document.createElement("button");
+                        audioButton.textContent = "تشغيل";
+                        audioButton.addEventListener("click", function() {
+                            playAudio(item.url);
+                        });
+
+                        audioItem.appendChild(audioButton);
+                        audioItemsContainer.appendChild(audioItem);
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching audio files:", error);
+                    audioItemsContainer.innerHTML = "حدث خطأ أثناء جلب الصوتيات. الرجاء المحاولة مرة أخرى.";
+                });
+
+            function playAudio(audioUrl) {
+                const audio = new Audio(audioUrl);
+                audio.play();
+            }
+        });
+    </script>
+</body>
+</html>
