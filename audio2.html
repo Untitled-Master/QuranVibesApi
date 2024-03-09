@@ -61,6 +61,7 @@
             border-radius: 5px;
             position: relative;
             overflow: hidden;
+            margin-bottom: 20px;
         }
 
         .progress-bar-fill {
@@ -84,6 +85,7 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            position: relative;
         }
 
         .audio-item:hover {
@@ -92,6 +94,28 @@
 
         .audio-item span {
             font-size: 1.2rem;
+        }
+
+        .download-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #70DF20;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-button:hover {
+            background-color: #75E129;
+        }
+
+        .download-button i {
+            margin-top: 3px;
         }
     </style>
 </head>
@@ -138,7 +162,16 @@
                             playAudio(item.url);
                         });
 
+                        const downloadButton = document.createElement("button");
+                        downloadButton.innerHTML = '<i class="fas fa-download"></i>';
+                        downloadButton.classList.add("download-button");
+                        downloadButton.addEventListener("click", function(event) {
+                            event.stopPropagation();
+                            downloadAudio(item.url);
+                        });
+
                         audioItem.appendChild(audioButton);
+                        audioItem.appendChild(downloadButton);
                         audioItemsContainer.appendChild(audioItem);
                     });
                 })
@@ -185,6 +218,15 @@
                 const minutes = Math.floor(time / 60);
                 const seconds = Math.floor(time % 60);
                 return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }
+
+            function downloadAudio(url) {
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'audio.mp3';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
             }
         });
     </script>
