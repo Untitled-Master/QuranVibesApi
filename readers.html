@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quran Readers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Cairo', Arial, sans-serif;
+            background-color: #191C1F;
+            color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .reader-frame {
+            width: 150px;
+            height: 200px;
+            background-color: #70DF20;
+            border-radius: 10px;
+            margin: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .reader-frame:hover {
+            background-color: #75E129;
+        }
+
+        .reader-frame img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .reader-frame button {
+            background-color: transparent;
+            color: #FFFFFF;
+            border: 2px solid #FFFFFF;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .reader-frame button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="reader-frame">
+            <img src="ali_jaber.jpg" alt="Ali Jaber">
+            <button onclick="window.location.href = 'ali_jaber.html';">علي جابر</button>
+        </div>
+        <div class="reader-frame">
+            <img src="mahmoud_khalil_alhusary.jpg" alt="Mahmoud Khalil Al-Husary">
+            <button onclick="window.location.href = 'mahmoud_khalil_alhusary.html';">محمود خليل الحصري</button>
+        </div>
+        <div class="reader-frame">
+            <img src="saud_al_shuraim.jpg" alt="Saud Al-Shuraim">
+            <button onclick="window.location.href = 'saud_al_shuraim.html';">سعود الشريم</button>
+        </div>
+        <div class="reader-frame">
+            <img src="mishary_rashid_alafasy.jpg" alt="Mishary Rashid Alafasy">
+            <button onclick="window.location.href = 'mishary_rashid_alafasy.html';">مشاري العفاسي</button>
+        </div>
+        <div class="reader-frame">
+            <img src="abdul_basit_abdul_samad.jpg" alt="Abdul Basit Abdul Samad">
+            <button onclick="window.location.href = 'abdul_basit_abdul_samad.html';">عبد الباسط عبد الصمد</button>
+        </div>
+        <div class="reader-frame">
+            <img src="abdulrahman_al_sudais.jpg" alt="Abdul Rahman Al-Sudais">
+            <button onclick="window.location.href = 'abdulrahman_al_sudais.html';">عبد الرحمن السديس</button>
+        </div>
+    </div>
+</body>
+</html>
