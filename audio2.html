@@ -54,7 +54,7 @@
         }
 
         .progress-bar {
-            width: 100%;
+            width: 50%;
             height: 10px;
             background-color: #555;
             border-radius: 5px;
@@ -129,7 +129,6 @@
         <div class="audio-controls">
             <button id="play-button"><i class="fas fa-play"></i></button>
             <button id="stop-button"><i class="fas fa-stop"></i></button>
-            <input type="range" id="volume-slider" class="volume-slider" min="0" max="1" step="0.1" value="1">
         </div>
 
         <div class="progress-bar">
@@ -149,7 +148,6 @@
             const audioPlayer = document.getElementById("audio-player");
             const playButton = document.getElementById("play-button");
             const stopButton = document.getElementById("stop-button");
-            const volumeSlider = document.getElementById("volume-slider");
             const progressBarFill = document.querySelector(".progress-bar-fill");
 
             fetch("https://quran-vibes-api.vercel.app/audio/a_jbr.json")
@@ -205,22 +203,10 @@
                 playButton.innerHTML = '<i class="fas fa-play"></i>';
             });
 
-            volumeSlider.addEventListener("input", function() {
-                audioPlayer.volume = volumeSlider.value;
-            });
-
             audioPlayer.addEventListener("timeupdate", function() {
-                const currentTime = formatTime(audioPlayer.currentTime);
-                const duration = formatTime(audioPlayer.duration);
                 const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
                 progressBarFill.style.width = `${progressPercent}%`;
             });
-
-            function formatTime(time) {
-                const minutes = Math.floor(time / 60);
-                const seconds = Math.floor(time % 60);
-                return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-            }
 
             function downloadAudio(url) {
                 const a = document.createElement('a');
