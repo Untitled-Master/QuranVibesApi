@@ -19,6 +19,32 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .explanation {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .line {
+            width: 50%;
+            height: 2px;
+            background-color: #FFFFFF;
+            margin-bottom: 20px;
+        }
+
+        .readers-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             flex-wrap: wrap;
             padding: 20px;
             text-align: center;
@@ -35,6 +61,7 @@
             justify-content: center;
             align-items: center;
             transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .reader-frame:hover {
@@ -42,20 +69,24 @@
         }
 
         .reader-frame img {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             margin-bottom: 10px;
+            border: 3px solid #FFFFFF;
         }
 
         .reader-frame button {
             background-color: transparent;
             color: #FFFFFF;
             border: 2px solid #FFFFFF;
-            padding: 5px 10px;
+            padding: 8px 15px;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            font-size: 14px;
+            font-weight: bold;
+            outline: none;
         }
 
         .reader-frame button:hover {
@@ -65,29 +96,38 @@
 </head>
 <body>
     <div class="container">
-        <div class="reader-frame">
-            <img src="https://upload.wikimedia.org/wikipedia/ar/7/76/Ali-jaber-99.jpg" alt="Ali Jaber">
-            <button onclick="window.location.href = 'a_jbr.html';">علي جابر</button>
+        <div class="title">
+            <i class="fas fa-mosque"></i> القراء
         </div>
-        <div class="reader-frame">
-            <img src="mahmoud_khalil_alhusary.jpg" alt="Mahmoud Khalil Al-Husary">
-            <button onclick="window.location.href = 'mahmoud_khalil_alhusary.html';">محمود خليل الحصري</button>
+        <div class="explanation">
+            مرحبًا بك في صفحة القراء، حيث يمكنك الاطلاع على قائمة بأبرز القراء والمقرئين المشهورين في العالم الإسلامي.
         </div>
-        <div class="reader-frame">
-            <img src="saud_al_shuraim.jpg" alt="Saud Al-Shuraim">
-            <button onclick="window.location.href = 'saud_al_shuraim.html';">سعود الشريم</button>
-        </div>
-        <div class="reader-frame">
-            <img src="mishary_rashid_alafasy.jpg" alt="Mishary Rashid Alafasy">
-            <button onclick="window.location.href = 'mishary_rashid_alafasy.html';">مشاري العفاسي</button>
-        </div>
-        <div class="reader-frame">
-            <img src="abdul_basit_abdul_samad.jpg" alt="Abdul Basit Abdul Samad">
-            <button onclick="window.location.href = 'abdul_basit_abdul_samad.html';">عبد الباسط عبد الصمد</button>
-        </div>
-        <div class="reader-frame">
-            <img src="abdulrahman_al_sudais.jpg" alt="Abdul Rahman Al-Sudais">
-            <button onclick="window.location.href = 'abdulrahman_al_sudais.html';">عبد الرحمن السديس</button>
+        <div class="line"></div>
+        <div class="readers-section">
+            <div class="reader-frame">
+                <img src="https://ar.assabile.com/media/person/200x256/ali-jaber.png" alt="Ali Jaber">
+                <button onclick="window.location.href = 'a_jbr.html';">علي جابر</button>
+            </div>
+            <div class="reader-frame">
+                <img src="mahmoud_khalil_alhusary.jpg" alt="Mahmoud Khalil Al-Husary">
+                <button onclick="window.location.href = 'mahmoud_khalil_alhusary.html';">محمود خليل الحصري</button>
+            </div>
+            <div class="reader-frame">
+                <img src="saud_al_shuraim.jpg" alt="Saud Al-Shuraim">
+                <button onclick="window.location.href = 'saud_al_shuraim.html';">سعود الشريم</button>
+            </div>
+            <div class="reader-frame">
+                <img src="mishary_rashid_alafasy.jpg" alt="Mishary Rashid Alafasy">
+                <button onclick="window.location.href = 'mishary_rashid_alafasy.html';">مشاري العفاسي</button>
+            </div>
+            <div class="reader-frame">
+                <img src="abdul_basit_abdul_samad.jpg" alt="Abdul Basit Abdul Samad">
+                <button onclick="window.location.href = 'abdul_basit_abdul_samad.html';">عبد الباسط عبد الصمد</button>
+            </div>
+            <div class="reader-frame">
+                <img src="abdulrahman_al_sudais.jpg" alt="Abdul Rahman Al-Sudais">
+                <button onclick="window.location.href = 'abdulrahman_al_sudais.html';">عبد الرحمن السديس</button>
+            </div>
         </div>
     </div>
 </body>
