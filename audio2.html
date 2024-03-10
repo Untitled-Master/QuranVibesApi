@@ -72,6 +72,15 @@
             transition: width 0.1s ease;
         }
 
+        .audio-time {
+            display: flex;
+            justify-content: space-between;
+            width: 50%;
+            font-size: 0.8rem;
+            color: #70DF20;
+            margin-bottom: 10px;
+        }
+
         .audio-list {
             width: 70%;
             height: 400px;
@@ -135,6 +144,11 @@
             <div class="progress-bar-fill"></div>
         </div>
 
+        <div class="audio-time">
+            <span id="current-time">00:00</span>
+            <span id="total-duration">00:00</span>
+        </div>
+
         <div class="audio-list" id="audio-items">
             جار التحميل...
         </div>
@@ -149,6 +163,8 @@
             const playButton = document.getElementById("play-button");
             const stopButton = document.getElementById("stop-button");
             const progressBarFill = document.querySelector(".progress-bar-fill");
+            const currentTimeDisplay = document.getElementById("current-time");
+            const totalDurationDisplay = document.getElementById("total-duration");
 
             fetch("https://quran-vibes-api.vercel.app/audio/a_jbr.json")
                 .then(response => response.json())
@@ -206,7 +222,15 @@
             audioPlayer.addEventListener("timeupdate", function() {
                 const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
                 progressBarFill.style.width = `${progressPercent}%`;
+                currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
+                totalDurationDisplay.textContent = formatTime(audioPlayer.duration);
             });
+
+            function formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = Math.floor(seconds % 60);
+                return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+            }
 
             function downloadAudio(url) {
                 const a = document.createElement('a');
