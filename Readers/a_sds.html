@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أرح سمعك</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Cairo', Arial, sans-serif;
+            background-color: #191C1F;
+            color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            color: #70DF20;
+        }
+
+        .audio-controls {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .audio-controls button {
+            background-color: transparent;
+            color: #70DF20;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            margin: 0 10px;
+            font-size: 1.5rem;
+        }
+
+        .audio-controls button:hover {
+            color: #75E129;
+        }
+
+        .progress-bar {
+            width: 50%;
+            height: 10px;
+            background-color: #555;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar-fill {
+            background-color: #70DF20;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: width 0.1s ease;
+        }
+
+        .audio-time {
+            display: flex;
+            justify-content: space-between;
+            width: 50%;
+            font-size: 0.8rem;
+            color: #70DF20;
+            margin-bottom: 10px;
+        }
+
+        .audio-list {
+            width: 70%;
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 2px solid #70DF20;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .audio-item {
+            padding: 10px;
+            background-color: #70DF20;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .audio-item:hover {
+            background-color: #75E129;
+        }
+
+        .audio-item span {
+            font-size: 1.2rem;
+        }
+
+        .download-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #70DF20;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-button:hover {
+            background-color: #75E129;
+        }
+
+        .download-button i {
+            margin-top: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>أرح سمعك</h1>
+        <h3>القارئ: عبد الرحمن السديس</h3>
+        <div class="audio-controls">
+            <button id="play-button"><i class="fas fa-play"></i></button>
+            <button id="stop-button"><i class="fas fa-stop"></i></button>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-bar-fill"></div>
+        </div>
+
+        <div class="audio-time">
+            <span id="current-time">00:00</span>
+            <span id="total-duration">00:00</span>
+        </div>
+
+        <div class="audio-list" id="audio-items">
+            جار التحميل...
+        </div>
+    </div>
+
+    <audio id="audio-player"></audio>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const audioItemsContainer = document.getElementById("audio-items");
+            const audioPlayer = document.getElementById("audio-player");
+            const playButton = document.getElementById("play-button");
+            const stopButton = document.getElementById("stop-button");
+            const progressBarFill = document.querySelector(".progress-bar-fill");
+            const currentTimeDisplay = document.getElementById("current-time");
+            const totalDurationDisplay = document.getElementById("total-duration");
+
+            fetch("https://quran-vibes-api.vercel.app/audio/a_sds.json")
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(item => {
+                        const audioItem = document.createElement("div");
+                        audioItem.classList.add("audio-item");
+
+                        const audioButton = document.createElement("span");
+                        audioButton.textContent = `سورة ${item.id}`;
+                        audioButton.addEventListener("click", function() {
+                            playAudio(item.url);
+                        });
+
+                        const downloadButton = document.createElement("button");
+                        downloadButton.innerHTML = '<i class="fas fa-download"></i>';
+                        downloadButton.classList.add("download-button");
+                        downloadButton.addEventListener("click", function(event) {
+                            event.stopPropagation();
+                            downloadAudio(item.url);
+                        });
+
+                        audioItem.appendChild(audioButton);
+                        audioItem.appendChild(downloadButton);
+                        audioItemsContainer.appendChild(audioItem);
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching audio files:", error);
+                    audioItemsContainer.innerHTML = "حدث خطأ أثناء جلب الصوتيات. الرجاء المحاولة مرة أخرى.";
+                });
+
+            function playAudio(audioUrl) {
+                audioPlayer.src = audioUrl;
+                audioPlayer.play();
+                playButton.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+
+            playButton.addEventListener("click", function() {
+                if (audioPlayer.paused) {
+                    audioPlayer.play();
+                    playButton.innerHTML = '<i class="fas fa-pause"></i>';
+                } else {
+                    audioPlayer.pause();
+                    playButton.innerHTML = '<i class="fas fa-play"></i>';
+                }
+            });
+
+            stopButton.addEventListener("click", function() {
+                audioPlayer.pause();
+                audioPlayer.currentTime = 0;
+                playButton.innerHTML = '<i class="fas fa-play"></i>';
+            });
+
+            audioPlayer.addEventListener("timeupdate", function() {
+                const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                progressBarFill.style.width = `${progressPercent}%`;
+                currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
+                totalDurationDisplay.textContent = formatTime(audioPlayer.duration);
+            });
+
+            function formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = Math.floor(seconds % 60);
+                return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+            }
+
+            function downloadAudio(url) {
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'audio.mp3';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        });
+    </script>
+</body>
+</html>
